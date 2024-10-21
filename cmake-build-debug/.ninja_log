@@ -1,0 +1,12 @@
+# ninja log v5
+41	666	7265596823602789	util/CMakeFiles/log.dir/log/log.cpp.obj	fb14620c20b4a8a9
+25	675	7265596823672790	toolset/CMakeFiles/EdgeList2CSR.out.dir/edgelist_to_csr.cpp.obj	d277b183f16ddc42
+32	959	7265596826538233	util/CMakeFiles/graph.dir/graph/graph_operation.cpp.obj	339fe61ee675a72e
+668	1104	7265596827918617	util/liblog.dll	6a60a009bb79f80f
+668	1104	7265596827918617	util/liblog.dll.a	6a60a009bb79f80f
+36	1731	7265596834240877	util/CMakeFiles/graph.dir/graph/uncertain_directed_graph.cpp.obj	8aa88e92b5f45400
+8	288	7265640747282798	util/CMakeFiles/io.dir/io/io.cpp.obj	11f6c450a9846f8b
+288	666	7265640750995902	util/libio.dll	63ca1ffaf342976b
+288	666	7265640750995902	util/libio.dll.a	63ca1ffaf342976b
+6	1644	7265640760820771	enumerator/CMakeFiles/Enumerator.out.dir/uhc_enumerator.cpp.obj	ed3c5734821fc728
+3	1650	7265640760886065	enumerator/CMakeFiles/Enumerator.out.dir/main.cpp.obj	d70d8f5dc426b482

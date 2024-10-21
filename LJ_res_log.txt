@@ -1,0 +1,360 @@
+2024/08/19 10:51:38
+dataset: LJ	 query file: LJ	 method: 1	 num queries: 100	 len constrain: 3
+terminated query ratio: 0.00 ms
+average query time: 0.10 ms
+99% latency query time: 1.25 ms
+average preprocess time: 0.01 ms
+average enumerate time: 0.09 ms
+average find actives time: 0.00 ms
+average build csr time: 0.01 ms
+average bfs time: 0.08 ms
+average reverse bfs time: 0.01 ms
+average find cut-line time: 0.00 ms
+average join time: 0.00 ms
+average left dfs time: 0.00 ms
+average right dfs time: 0.00 ms
+average concat path time: 0.00 ms
+average subgraph vertices count: 5
+average subgraph edges count: 19
+average path edges count: 0
+subgraph ratio: 0.00
+average result count: 5
+average concat path count: 0
+average left path count: 0
+average right path count: 0
+average accessed edge count: 1
+average index memory cost: 0.00 mb
+average total path memory cost: 0.00 mb
+average partial path memory cost: 0.00 mb
+average throughput: 56449.90 per second
+
+2024/08/19 10:51:39
+dataset: LJ	 query file: LJ	 method: 3	 num queries: 100	 len constrain: 3
+terminated query ratio: 0.00 ms
+average query time: 15.88 ms
+99% latency query time: 20.44 ms
+average preprocess time: 15.79 ms
+average enumerate time: 0.09 ms
+average find actives time: 0.00 ms
+average build csr time: 15.79 ms
+average bfs time: 0.08 ms
+average reverse bfs time: 0.01 ms
+average find cut-line time: 0.00 ms
+average join time: 0.00 ms
+average left dfs time: 0.00 ms
+average right dfs time: 0.00 ms
+average concat path time: 0.00 ms
+average subgraph vertices count: 5
+average subgraph edges count: 0
+average path edges count: 0
+subgraph ratio: -nan
+average result count: 5
+average concat path count: 0
+average left path count: 0
+average right path count: 0
+average accessed edge count: 1
+average index memory cost: 0.00 mb
+average total path memory cost: 0.00 mb
+average partial path memory cost: 0.00 mb
+average throughput: 56227.38 per second
+
+2024/08/19 10:51:42
+dataset: LJ	 query file: LJ	 method: 1	 num queries: 100	 len constrain: 4
+terminated query ratio: 0.00 ms
+average query time: 1.77 ms
+99% latency query time: 20.62 ms
+average preprocess time: 0.11 ms
+average enumerate time: 1.66 ms
+average find actives time: 0.00 ms
+average build csr time: 0.11 ms
+average bfs time: 1.58 ms
+average reverse bfs time: 0.07 ms
+average find cut-line time: 0.00 ms
+average join time: 0.00 ms
+average left dfs time: 0.00 ms
+average right dfs time: 0.00 ms
+average concat path time: 0.00 ms
+average subgraph vertices count: 66
+average subgraph edges count: 1516
+average path edges count: 0
+subgraph ratio: 0.00
+average result count: 223
+average concat path count: 0
+average left path count: 0
+average right path count: 0
+average accessed edge count: 124
+average index memory cost: 0.01 mb
+average total path memory cost: 0.00 mb
+average partial path memory cost: 0.00 mb
+average throughput: 134606.20 per second
+
+2024/08/19 10:51:42
+dataset: LJ	 query file: LJ	 method: 3	 num queries: 100	 len constrain: 4
+terminated query ratio: 0.00 ms
+average query time: 17.09 ms
+99% latency query time: 33.33 ms
+average preprocess time: 15.11 ms
+average enumerate time: 1.98 ms
+average find actives time: 0.00 ms
+average build csr time: 15.11 ms
+average bfs time: 1.89 ms
+average reverse bfs time: 0.08 ms
+average find cut-line time: 0.00 ms
+average join time: 0.00 ms
+average left dfs time: 0.00 ms
+average right dfs time: 0.00 ms
+average concat path time: 0.00 ms
+average subgraph vertices count: 66
+average subgraph edges count: 0
+average path edges count: 0
+subgraph ratio: -nan
+average result count: 223
+average concat path count: 0
+average left path count: 0
+average right path count: 0
+average accessed edge count: 124
+average index memory cost: 0.00 mb
+average total path memory cost: 0.00 mb
+average partial path memory cost: 0.00 mb
+average throughput: 112775.65 per second
+
+2024/08/19 10:51:45
+dataset: LJ	 query file: LJ	 method: 1	 num queries: 100	 len constrain: 5
+terminated query ratio: 0.00 ms
+average query time: 21.95 ms
+99% latency query time: 134.80 ms
+average preprocess time: 1.88 ms
+average enumerate time: 20.07 ms
+average find actives time: 0.00 ms
+average build csr time: 1.88 ms
+average bfs time: 18.45 ms
+average reverse bfs time: 0.99 ms
+average find cut-line time: 0.00 ms
+average join time: 0.00 ms
+average left dfs time: 0.00 ms
+average right dfs time: 0.00 ms
+average concat path time: 0.00 ms
+average subgraph vertices count: 1311
+average subgraph edges count: 53112
+average path edges count: 0
+subgraph ratio: 0.00
+average result count: 25990
+average concat path count: 0
+average left path count: 0
+average right path count: 0
+average accessed edge count: 18205
+average index memory cost: 0.47 mb
+average total path memory cost: 0.59 mb
+average partial path memory cost: 0.00 mb
+average throughput: 1294869.90 per second
+
+2024/08/19 10:51:47
+dataset: LJ	 query file: LJ	 method: 3	 num queries: 100	 len constrain: 5
+terminated query ratio: 0.00 ms
+average query time: 37.03 ms
+99% latency query time: 146.55 ms
+average preprocess time: 15.80 ms
+average enumerate time: 21.24 ms
+average find actives time: 0.00 ms
+average build csr time: 15.80 ms
+average bfs time: 19.75 ms
+average reverse bfs time: 1.03 ms
+average find cut-line time: 0.00 ms
+average join time: 0.00 ms
+average left dfs time: 0.00 ms
+average right dfs time: 0.00 ms
+average concat path time: 0.00 ms
+average subgraph vertices count: 1311
+average subgraph edges count: 0
+average path edges count: 0
+subgraph ratio: -nan
+average result count: 25990
+average concat path count: 0
+average left path count: 0
+average right path count: 0
+average accessed edge count: 18205
+average index memory cost: 0.00 mb
+average total path memory cost: 0.59 mb
+average partial path memory cost: 0.00 mb
+average throughput: 1223873.53 per second
+
+2024/08/19 10:51:52
+dataset: LJ	 query file: LJ	 method: 1	 num queries: 100	 len constrain: 6
+terminated query ratio: 0.00 ms
+average query time: 259.94 ms
+99% latency query time: 3340.62 ms
+average preprocess time: 16.62 ms
+average enumerate time: 243.32 ms
+average find actives time: 0.00 ms
+average build csr time: 16.62 ms
+average bfs time: 123.35 ms
+average reverse bfs time: 8.20 ms
+average find cut-line time: 0.00 ms
+average join time: 0.00 ms
+average left dfs time: 0.00 ms
+average right dfs time: 0.00 ms
+average concat path time: 0.00 ms
+average subgraph vertices count: 11433
+average subgraph edges count: 556800
+average path edges count: 0
+subgraph ratio: 0.00
+average result count: 4276520
+average concat path count: 0
+average left path count: 0
+average right path count: 0
+average accessed edge count: 3190707
+average index memory cost: 4.86 mb
+average total path memory cost: 114.20 mb
+average partial path memory cost: 0.00 mb
+average throughput: 17575589.74 per second
+
+2024/08/19 10:52:19
+dataset: LJ	 query file: LJ	 method: 3	 num queries: 100	 len constrain: 6
+terminated query ratio: 0.00 ms
+average query time: 233.40 ms
+99% latency query time: 2261.22 ms
+average preprocess time: 27.87 ms
+average enumerate time: 205.53 ms
+average find actives time: 0.00 ms
+average build csr time: 27.87 ms
+average bfs time: 125.38 ms
+average reverse bfs time: 7.82 ms
+average find cut-line time: 0.00 ms
+average join time: 0.00 ms
+average left dfs time: 0.00 ms
+average right dfs time: 0.00 ms
+average concat path time: 0.00 ms
+average subgraph vertices count: 11433
+average subgraph edges count: 0
+average path edges count: 0
+subgraph ratio: -nan
+average result count: 4276520
+average concat path count: 0
+average left path count: 0
+average right path count: 0
+average accessed edge count: 3190707
+average index memory cost: 0.00 mb
+average total path memory cost: 114.20 mb
+average partial path memory cost: 0.00 mb
+average throughput: 20807315.75 per second
+
+2024/08/19 10:52:43
+dataset: LJ	 query file: LJ	 method: 1	 num queries: 100	 len constrain: 7
+terminated query ratio: 0.00 ms
+average query time: 24088.71 ms
+99% latency query time: 585705.93 ms
+average preprocess time: 81.05 ms
+average enumerate time: 24007.66 ms
+average find actives time: 0.00 ms
+average build csr time: 81.05 ms
+average bfs time: 377.34 ms
+average reverse bfs time: 42.98 ms
+average find cut-line time: 0.00 ms
+average join time: 0.00 ms
+average left dfs time: 0.00 ms
+average right dfs time: 0.00 ms
+average concat path time: 0.00 ms
+average subgraph vertices count: 66965
+average subgraph edges count: 2403106
+average path edges count: 0
+subgraph ratio: 0.00
+average result count: 793506934
+average concat path count: 0
+average left path count: 0
+average right path count: 0
+average accessed edge count: 623677186
+average index memory cost: 22.42 mb
+average total path memory cost: 24215.91 mb
+average partial path memory cost: 0.00 mb
+average throughput: 33052242.30 per second
+
+2024/08/19 11:32:53
+dataset: LJ	 query file: LJ	 method: 3	 num queries: 100	 len constrain: 7
+terminated query ratio: 0.00 ms
+average query time: 14418.15 ms
+99% latency query time: 356386.22 ms
+average preprocess time: 81.47 ms
+average enumerate time: 14336.68 ms
+average find actives time: 0.00 ms
+average build csr time: 81.47 ms
+average bfs time: 372.12 ms
+average reverse bfs time: 41.64 ms
+average find cut-line time: 0.00 ms
+average join time: 0.00 ms
+average left dfs time: 0.00 ms
+average right dfs time: 0.00 ms
+average concat path time: 0.00 ms
+average subgraph vertices count: 66965
+average subgraph edges count: 0
+average path edges count: 0
+subgraph ratio: -nan
+average result count: 793506934
+average concat path count: 0
+average left path count: 0
+average right path count: 0
+average accessed edge count: 623677186
+average index memory cost: 0.00 mb
+average total path memory cost: 24215.91 mb
+average partial path memory cost: 0.00 mb
+average throughput: 55348044.32 per second
+
+2024/08/19 11:56:57
+dataset: LJ	 query file: LJ	 method: 1	 num queries: 100	 len constrain: 8
+terminated query ratio: 0.15 ms
+average query time: 179696.02 ms
+99% latency query time: 1000000.10 ms
+average preprocess time: 313.62 ms
+average enumerate time: 179382.41 ms
+average find actives time: 0.00 ms
+average build csr time: 313.62 ms
+average bfs time: 608.83 ms
+average reverse bfs time: 138.38 ms
+average find cut-line time: 0.00 ms
+average join time: 0.00 ms
+average left dfs time: 0.00 ms
+average right dfs time: 0.00 ms
+average concat path time: 0.00 ms
+average subgraph vertices count: 262189
+average subgraph edges count: 8095886
+average path edges count: 0
+subgraph ratio: 0.00
+average result count: 6564814461
+average concat path count: 0
+average left path count: 0
+average right path count: 0
+average accessed edge count: 4199459937
+average index memory cost: 79.77 mb
+average total path memory cost: 225385.02 mb
+average partial path memory cost: 0.00 mb
+average throughput: 36596757.97 per second
+
+2024/08/19 16:56:28
+dataset: LJ	 query file: LJ	 method: 3	 num queries: 100	 len constrain: 8
+terminated query ratio: 0.12 ms
+average query time: 165063.41 ms
+99% latency query time: 1000000.08 ms
+average preprocess time: 269.04 ms
+average enumerate time: 164794.37 ms
+average find actives time: 0.00 ms
+average build csr time: 269.04 ms
+average bfs time: 616.42 ms
+average reverse bfs time: 138.54 ms
+average find cut-line time: 0.00 ms
+average join time: 0.00 ms
+average left dfs time: 0.00 ms
+average right dfs time: 0.00 ms
+average concat path time: 0.00 ms
+average subgraph vertices count: 262189
+average subgraph edges count: 0
+average path edges count: 0
+subgraph ratio: -nan
+average result count: 9747100914
+average concat path count: 0
+average left path count: 0
+average right path count: 0
+average accessed edge count: 6255979658
+average index memory cost: 0.00 mb
+average total path memory cost: 334640.15 mb
+average partial path memory cost: 0.00 mb
+average throughput: 59147048.91 per second
+

@@ -1,0 +1,153 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1,
+						2,
+						3
+					],
+					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.0"
+					},
+					"projectIndex" : 0,
+					"source" : "."
+				},
+				{
+					"build" : "enumerator",
+					"jsonFile" : "directory-enumerator-Debug-35e1f4ec92d201daea59.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.0"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "enumerator",
+					"targetIndexes" : 
+					[
+						1
+					]
+				},
+				{
+					"build" : "toolset",
+					"jsonFile" : "directory-toolset-Debug-6b3a2b647546b00691c8.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.0"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "toolset",
+					"targetIndexes" : 
+					[
+						0,
+						2
+					]
+				},
+				{
+					"build" : "util",
+					"jsonFile" : "directory-util-Debug-88dfab35cbcc10198186.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.0"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "util",
+					"targetIndexes" : 
+					[
+						3,
+						4,
+						5
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3
+					],
+					"name" : "HCPathEnum",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 2,
+					"id" : "EdgeList2CSR.out::@6cc700c060895e309eb7",
+					"jsonFile" : "target-EdgeList2CSR.out-Debug-b5193c4a9bc4595f7ca0.json",
+					"name" : "EdgeList2CSR.out",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "Enumerator.out::@70afffb6a93f61c7dad1",
+					"jsonFile" : "target-Enumerator.out-Debug-5f95ba262a7b19fe95c8.json",
+					"name" : "Enumerator.out",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "GenerateVertexPairs.out::@6cc700c060895e309eb7",
+					"jsonFile" : "target-GenerateVertexPairs.out-Debug-28074b5b11df229db9c2.json",
+					"name" : "GenerateVertexPairs.out",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "graph::@5865449b717dd869d2cd",
+					"jsonFile" : "target-graph-Debug-834006cbeef3ad011ad1.json",
+					"name" : "graph",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "io::@5865449b717dd869d2cd",
+					"jsonFile" : "target-io-Debug-46a82831441851a9af9f.json",
+					"name" : "io",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "log::@5865449b717dd869d2cd",
+					"jsonFile" : "target-log-Debug-9d43aa72c14f12313f5e.json",
+					"name" : "log",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "D:/workspace/cLionWorkSpace/HCPathEnum-main/cmake-build-debug",
+		"source" : "D:/workspace/cLionWorkSpace/HCPathEnum-main"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 5
+	}
+}

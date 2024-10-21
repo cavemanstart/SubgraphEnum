@@ -1,0 +1,360 @@
+2024/08/19 10:51:46
+dataset: EP	 query file: EP	 method: 1	 num queries: 100	 len constrain: 3
+terminated query ratio: 0.00 ms
+average query time: 0.05 ms
+99% latency query time: 0.30 ms
+average preprocess time: 0.02 ms
+average enumerate time: 0.03 ms
+average find actives time: 0.00 ms
+average build csr time: 0.02 ms
+average bfs time: 0.02 ms
+average reverse bfs time: 0.01 ms
+average find cut-line time: 0.00 ms
+average join time: 0.00 ms
+average left dfs time: 0.00 ms
+average right dfs time: 0.00 ms
+average concat path time: 0.00 ms
+average subgraph vertices count: 9
+average subgraph edges count: 114
+average path edges count: 0
+subgraph ratio: 0.00
+average result count: 13
+average concat path count: 0
+average left path count: 0
+average right path count: 0
+average accessed edge count: 2
+average index memory cost: 0.00 mb
+average total path memory cost: 0.00 mb
+average partial path memory cost: 0.00 mb
+average throughput: 464864.30 per second
+
+2024/08/19 10:51:46
+dataset: EP	 query file: EP	 method: 3	 num queries: 100	 len constrain: 3
+terminated query ratio: 0.00 ms
+average query time: 0.13 ms
+99% latency query time: 0.52 ms
+average preprocess time: 0.11 ms
+average enumerate time: 0.01 ms
+average find actives time: 0.00 ms
+average build csr time: 0.11 ms
+average bfs time: 0.01 ms
+average reverse bfs time: 0.00 ms
+average find cut-line time: 0.00 ms
+average join time: 0.00 ms
+average left dfs time: 0.00 ms
+average right dfs time: 0.00 ms
+average concat path time: 0.00 ms
+average subgraph vertices count: 9
+average subgraph edges count: 0
+average path edges count: 0
+subgraph ratio: -nan
+average result count: 13
+average concat path count: 0
+average left path count: 0
+average right path count: 0
+average accessed edge count: 2
+average index memory cost: 0.00 mb
+average total path memory cost: 0.00 mb
+average partial path memory cost: 0.00 mb
+average throughput: 1007470.78 per second
+
+2024/08/19 10:51:46
+dataset: EP	 query file: EP	 method: 1	 num queries: 100	 len constrain: 4
+terminated query ratio: 0.00 ms
+average query time: 0.28 ms
+99% latency query time: 1.71 ms
+average preprocess time: 0.09 ms
+average enumerate time: 0.18 ms
+average find actives time: 0.00 ms
+average build csr time: 0.09 ms
+average bfs time: 0.13 ms
+average reverse bfs time: 0.05 ms
+average find cut-line time: 0.00 ms
+average join time: 0.00 ms
+average left dfs time: 0.00 ms
+average right dfs time: 0.00 ms
+average concat path time: 0.00 ms
+average subgraph vertices count: 104
+average subgraph edges count: 2850
+average path edges count: 0
+subgraph ratio: 0.00
+average result count: 1154
+average concat path count: 0
+average left path count: 0
+average right path count: 0
+average accessed edge count: 128
+average index memory cost: 0.03 mb
+average total path memory cost: 0.02 mb
+average partial path memory cost: 0.00 mb
+average throughput: 6248814.47 per second
+
+2024/08/19 10:51:46
+dataset: EP	 query file: EP	 method: 3	 num queries: 100	 len constrain: 4
+terminated query ratio: 0.00 ms
+average query time: 0.36 ms
+99% latency query time: 1.36 ms
+average preprocess time: 0.19 ms
+average enumerate time: 0.17 ms
+average find actives time: 0.00 ms
+average build csr time: 0.19 ms
+average bfs time: 0.12 ms
+average reverse bfs time: 0.04 ms
+average find cut-line time: 0.00 ms
+average join time: 0.00 ms
+average left dfs time: 0.00 ms
+average right dfs time: 0.00 ms
+average concat path time: 0.00 ms
+average subgraph vertices count: 104
+average subgraph edges count: 0
+average path edges count: 0
+subgraph ratio: -nan
+average result count: 1154
+average concat path count: 0
+average left path count: 0
+average right path count: 0
+average accessed edge count: 128
+average index memory cost: 0.00 mb
+average total path memory cost: 0.02 mb
+average partial path memory cost: 0.00 mb
+average throughput: 6704603.65 per second
+
+2024/08/19 10:51:46
+dataset: EP	 query file: EP	 method: 1	 num queries: 100	 len constrain: 5
+terminated query ratio: 0.00 ms
+average query time: 2.34 ms
+99% latency query time: 8.34 ms
+average preprocess time: 0.78 ms
+average enumerate time: 1.57 ms
+average find actives time: 0.00 ms
+average build csr time: 0.78 ms
+average bfs time: 0.60 ms
+average reverse bfs time: 0.29 ms
+average find cut-line time: 0.00 ms
+average join time: 0.00 ms
+average left dfs time: 0.00 ms
+average right dfs time: 0.00 ms
+average concat path time: 0.00 ms
+average subgraph vertices count: 984
+average subgraph edges count: 41061
+average path edges count: 0
+subgraph ratio: 0.00
+average result count: 111861
+average concat path count: 0
+average left path count: 0
+average right path count: 0
+average accessed edge count: 11573
+average index memory cost: 0.36 mb
+average total path memory cost: 2.56 mb
+average partial path memory cost: 0.00 mb
+average throughput: 71296087.74 per second
+
+2024/08/19 10:51:46
+dataset: EP	 query file: EP	 method: 3	 num queries: 100	 len constrain: 5
+terminated query ratio: 0.00 ms
+average query time: 2.39 ms
+99% latency query time: 7.66 ms
+average preprocess time: 0.88 ms
+average enumerate time: 1.51 ms
+average find actives time: 0.00 ms
+average build csr time: 0.88 ms
+average bfs time: 0.64 ms
+average reverse bfs time: 0.30 ms
+average find cut-line time: 0.00 ms
+average join time: 0.00 ms
+average left dfs time: 0.00 ms
+average right dfs time: 0.00 ms
+average concat path time: 0.00 ms
+average subgraph vertices count: 984
+average subgraph edges count: 0
+average path edges count: 0
+subgraph ratio: -nan
+average result count: 111861
+average concat path count: 0
+average left path count: 0
+average right path count: 0
+average accessed edge count: 11573
+average index memory cost: 0.00 mb
+average total path memory cost: 2.56 mb
+average partial path memory cost: 0.00 mb
+average throughput: 73984253.76 per second
+
+2024/08/19 10:51:47
+dataset: EP	 query file: EP	 method: 1	 num queries: 100	 len constrain: 6
+terminated query ratio: 0.00 ms
+average query time: 75.16 ms
+99% latency query time: 413.19 ms
+average preprocess time: 2.63 ms
+average enumerate time: 72.54 ms
+average find actives time: 0.00 ms
+average build csr time: 2.63 ms
+average bfs time: 1.69 ms
+average reverse bfs time: 1.24 ms
+average find cut-line time: 0.00 ms
+average join time: 0.00 ms
+average left dfs time: 0.00 ms
+average right dfs time: 0.00 ms
+average concat path time: 0.00 ms
+average subgraph vertices count: 4053
+average subgraph edges count: 155684
+average path edges count: 0
+subgraph ratio: 0.00
+average result count: 11168490
+average concat path count: 0
+average left path count: 0
+average right path count: 0
+average accessed edge count: 1135452
+average index memory cost: 1.40 mb
+average total path memory cost: 298.23 mb
+average partial path memory cost: 0.00 mb
+average throughput: 153973198.20 per second
+
+2024/08/19 10:51:54
+dataset: EP	 query file: EP	 method: 3	 num queries: 100	 len constrain: 6
+terminated query ratio: 0.00 ms
+average query time: 61.20 ms
+99% latency query time: 303.98 ms
+average preprocess time: 2.60 ms
+average enumerate time: 58.60 ms
+average find actives time: 0.00 ms
+average build csr time: 2.60 ms
+average bfs time: 1.96 ms
+average reverse bfs time: 1.30 ms
+average find cut-line time: 0.00 ms
+average join time: 0.00 ms
+average left dfs time: 0.00 ms
+average right dfs time: 0.00 ms
+average concat path time: 0.00 ms
+average subgraph vertices count: 4053
+average subgraph edges count: 0
+average path edges count: 0
+subgraph ratio: -nan
+average result count: 11168490
+average concat path count: 0
+average left path count: 0
+average right path count: 0
+average accessed edge count: 1135452
+average index memory cost: 0.00 mb
+average total path memory cost: 298.23 mb
+average partial path memory cost: 0.00 mb
+average throughput: 190595989.97 per second
+
+2024/08/19 10:52:00
+dataset: EP	 query file: EP	 method: 1	 num queries: 100	 len constrain: 7
+terminated query ratio: 0.00 ms
+average query time: 7105.35 ms
+99% latency query time: 43361.22 ms
+average preprocess time: 5.48 ms
+average enumerate time: 7099.88 ms
+average find actives time: 0.00 ms
+average build csr time: 5.48 ms
+average bfs time: 3.39 ms
+average reverse bfs time: 2.87 ms
+average find cut-line time: 0.00 ms
+average join time: 0.00 ms
+average left dfs time: 0.00 ms
+average right dfs time: 0.00 ms
+average concat path time: 0.00 ms
+average subgraph vertices count: 10811
+average subgraph edges count: 284750
+average path edges count: 0
+subgraph ratio: 0.00
+average result count: 1136048435
+average concat path count: 0
+average left path count: 0
+average right path count: 0
+average accessed edge count: 115242815
+average index memory cost: 2.83 mb
+average total path memory cost: 34669.45 mb
+average partial path memory cost: 0.00 mb
+average throughput: 160009602.59 per second
+
+2024/08/19 11:03:51
+dataset: EP	 query file: EP	 method: 3	 num queries: 100	 len constrain: 7
+terminated query ratio: 0.00 ms
+average query time: 5582.40 ms
+99% latency query time: 31149.36 ms
+average preprocess time: 4.21 ms
+average enumerate time: 5578.19 ms
+average find actives time: 0.00 ms
+average build csr time: 4.21 ms
+average bfs time: 2.70 ms
+average reverse bfs time: 2.25 ms
+average find cut-line time: 0.00 ms
+average join time: 0.00 ms
+average left dfs time: 0.00 ms
+average right dfs time: 0.00 ms
+average concat path time: 0.00 ms
+average subgraph vertices count: 10811
+average subgraph edges count: 0
+average path edges count: 0
+subgraph ratio: -nan
+average result count: 1136048435
+average concat path count: 0
+average left path count: 0
+average right path count: 0
+average accessed edge count: 115242815
+average index memory cost: 0.00 mb
+average total path memory cost: 34669.45 mb
+average partial path memory cost: 0.00 mb
+average throughput: 203658867.34 per second
+
+2024/08/19 11:13:09
+dataset: EP	 query file: EP	 method: 1	 num queries: 100	 len constrain: 8
+terminated query ratio: 0.10 ms
+average query time: 215608.21 ms
+99% latency query time: 1000000.09 ms
+average preprocess time: 8.10 ms
+average enumerate time: 215600.12 ms
+average find actives time: 0.00 ms
+average build csr time: 8.10 ms
+average bfs time: 5.38 ms
+average reverse bfs time: 4.57 ms
+average find cut-line time: 0.00 ms
+average join time: 0.00 ms
+average left dfs time: 0.00 ms
+average right dfs time: 0.00 ms
+average concat path time: 0.00 ms
+average subgraph vertices count: 18831
+average subgraph edges count: 361044
+average path edges count: 0
+subgraph ratio: 0.00
+average result count: 18166072236
+average concat path count: 0
+average left path count: 0
+average right path count: 0
+average accessed edge count: 5482772017
+average index memory cost: 4.05 mb
+average total path memory cost: 623682.59 mb
+average partial path memory cost: 0.00 mb
+average throughput: 84258174.22 per second
+
+2024/08/19 17:12:30
+dataset: EP	 query file: EP	 method: 3	 num queries: 100	 len constrain: 8
+terminated query ratio: 0.07 ms
+average query time: 171369.32 ms
+99% latency query time: 1000000.08 ms
+average preprocess time: 5.98 ms
+average enumerate time: 171363.34 ms
+average find actives time: 0.00 ms
+average build csr time: 5.98 ms
+average bfs time: 3.73 ms
+average reverse bfs time: 3.16 ms
+average find cut-line time: 0.00 ms
+average join time: 0.00 ms
+average left dfs time: 0.00 ms
+average right dfs time: 0.00 ms
+average concat path time: 0.00 ms
+average subgraph vertices count: 18831
+average subgraph edges count: 0
+average path edges count: 0
+subgraph ratio: -nan
+average result count: 20388065785
+average concat path count: 0
+average left path count: 0
+average right path count: 0
+average accessed edge count: 6314402346
+average index memory cost: 0.00 mb
+average total path memory cost: 699968.69 mb
+average partial path memory cost: 0.00 mb
+average throughput: 118975655.05 per second
+
