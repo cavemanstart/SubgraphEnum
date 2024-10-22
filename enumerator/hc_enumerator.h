@@ -44,7 +44,7 @@ public:
 
     //subgraph struct
     std::vector<uint32_t> subgraph_vertices;
-    std::vector<std::vector<uint32_t>> pre_subgraph;
+    std::vector<std::set<uint32_t>> pre_subgraph;
     std::vector<std::vector<uint32_t>> subgraph;
     std::vector<std::vector<uint32_t>> sorted_subgraph;
     std::set<std::pair<uint32_t,uint32_t>> st;
@@ -147,6 +147,6 @@ public:
     void reset_counter();
     void outputPathGraph();
     void outputPreSubgraph();
-    void outputSubgraph(std::vector<std::vector<uint32_t>>& graph);
+    void outputSubgraph();
 };
 #endif //XTRAGRAPHCOMPUTING_HC_ENUMERATOR_H

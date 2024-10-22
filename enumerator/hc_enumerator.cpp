@@ -32,16 +32,21 @@ void HcEnumerator::execute(uint32_t src, uint32_t dst) {
         simple_dfs(src_,0);
     }else if(method_type_ == query_method::PathEnum){
         get_pre_subgraph();
+//        outputPreSubgraph();
         build_index();
         preprocess_time_ = find_subgraph_vertices_time_ + build_index_time_;
         dfs_by_index(src_,0);
+//        outputPathGraph();
         path_edges_counts_ = st.size();
     }else if(method_type_ == query_method::SortedEnum){
         get_pre_subgraph();
+//        outputPreSubgraph();
         get_subgraph();
+//        outputSubgraph();
         sort_adj();
         preprocess_time_ = find_subgraph_vertices_time_ + get_pre_subgraph_time_+ reduce_graph_time_ + build_index_time_;
         sorted_dfs(src,0);
+//        outputPathGraph();
         path_edges_counts_ = st.size();
     }
     total_path_memory_cost_ = result_count_ * (len_constrain_ + 1) * sizeof (uint32_t);
@@ -147,6 +152,7 @@ void HcEnumerator::reset_for_next_single_query() {//prepare for next query pair
     subgraph.clear();
     sorted_subgraph.clear();
     st.clear();
+    subgraph_degree.clear();
 
     result_count_ = 0;
     accessed_edges_ = 0;
@@ -300,7 +306,7 @@ void HcEnumerator::get_pre_subgraph() {
         for(uint32_t i=0;i<nbs.second;i++){
             uint32_t vv = nbs.first[i];
             if(sign_[vv] && distance_[v].first+distance_[vv].second<len_constrain_){
-                pre_subgraph[v].push_back(vv);
+                pre_subgraph[v].insert(vv);
                 subgraph_degree[v].first++;//出度
                 subgraph_degree[vv].second++;//入度
                 subgraph_edges_count_++;
@@ -310,27 +316,18 @@ void HcEnumerator::get_pre_subgraph() {
     auto end = std::chrono::high_resolution_clock::now();
     get_pre_subgraph_time_ = std::chrono::duration_cast<std::chrono::nanoseconds>(end - rev_bfs_end).count();
 }
-void HcEnumerator::outputPreSubgraph(){
-    std::string outfile = "./preSubGraph.txt";
-    std::ofstream outs(outfile,std::ios::app);
-    for(auto & u : subgraph_vertices){
-        outs<<u<<" ";
-        for(auto & v: pre_subgraph[u]){
-            outs<<v<<" ";
-        }
-        outs<<"\n";
-    }
-    outs.close();
-}
 void HcEnumerator::get_subgraph() {
     auto start = std::chrono::high_resolution_clock::now();
     subgraph.resize(num_vertices_);
     uint32_t idx = 0;
     for(auto & u : subgraph_vertices){
-        if(subgraph_degree[u].first==1 && subgraph_degree[u].second==1){
-            sign_[u] = false;
-            subgraph_vertices_count_--;
-            continue;
+        if(u!=src_ && subgraph_degree[u].first==1 && subgraph_degree[u].second==1){
+            uint64_t v = *pre_subgraph[u].begin();
+            if(pre_subgraph[v].count(u)){
+                sign_[u] = false;
+                subgraph_vertices_count_--;
+                continue;
+            }
         }
         subgraph_vertices[idx++] = u;
     }
@@ -347,13 +344,27 @@ void HcEnumerator::get_subgraph() {
     auto end = std::chrono::high_resolution_clock::now();
     reduce_graph_time_ = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
 }
-void HcEnumerator::outputSubgraph(std::vector<std::vector<uint32_t>>& graph){
+void HcEnumerator::outputPreSubgraph(){
+    std::string outfile = "./preSubGraph.txt";
+    std::ofstream outs(outfile,std::ios::app);
+    outs<<"\n";
+    for(auto & u : subgraph_vertices){
+        outs<<u<<" ";
+        for(auto & v: pre_subgraph[u]){
+            outs<<v<<" ";
+        }
+        outs<<"\n";
+    }
+    outs.close();
+}
+void HcEnumerator::outputSubgraph(){
     std::string outfile = "./subGraph.txt";
     std::ofstream outs(outfile,std::ios::app);
+    outs<<"\n";
     for(int i=0;i<num_vertices_;i++){
-        if(!graph[i].empty()){
+        if(!subgraph[i].empty()){
             outs<<i<<" ";
-            for(auto &v: graph[i]){
+            for(auto &v: subgraph[i]){
                 outs<<v<<" ";
             }
             outs<<"\n";
@@ -364,6 +375,7 @@ void HcEnumerator::outputSubgraph(std::vector<std::vector<uint32_t>>& graph){
 void HcEnumerator::outputPathGraph(){
     std::string outfile = "./pathGraph.txt";
     std::ofstream outs(outfile,std::ios::app);
+    outs<<"\n";
     for (auto it = st.cbegin(); it != st.cend(); it++){
         outs<< (*it).first<<" "<< (*it).second<<"\n";
     }

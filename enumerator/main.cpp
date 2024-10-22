@@ -63,7 +63,7 @@ void excutor(HcEnumerator &enumerator, std::vector<std::pair<uint32_t, uint32_t>
             terminated_query_count += 1;
         }
         enumerator.update_counter();
-//        log_info("src %u, dst %u, num of results: %u",enumerator.src_, enumerator.dst_,enumerator.result_count_);
+        log_info("src %u, dst %u, num of results: %u",enumerator.src_, enumerator.dst_,enumerator.result_count_);
         enumerator.reset_for_next_single_query();
     }
     std::sort(enumerator.query_time_arr.begin(),enumerator.query_time_arr.end());
@@ -94,7 +94,7 @@ void excutor(HcEnumerator &enumerator, std::vector<std::pair<uint32_t, uint32_t>
     double average_partial_path_memory_cost =(double ) accumulate_counter(enumerator.partial_path_memory_cost_arr)/num_queries/1024/1024;
     double average_total_path_memory_cost = (double ) accumulate_counter(enumerator.total_path_memory_cost_arr)/num_queries/1024/1024;
     double average_throughput = (double )average_result_count / average_enumerate_time * 1000;
-    outputEdgeRatio(enumerator.path_edges_count_arr,enumerator.subgraph_edges_count_arr);
+//    outputEdgeRatio(enumerator.path_edges_count_arr,enumerator.subgraph_edges_count_arr);
     enumerator.reset_counter();
     enumerator.reset_for_next_batch_query();
     log_info("dump into log file...");
@@ -155,7 +155,7 @@ int main(int argc, char *argv[]) {
     enumerator.init(&digraph);
     input_query_folder += "/general_pairs.bin";
     std::vector<std::pair<uint32_t, uint32_t>> queries;
-//    queries.emplace_back(872574, 1298990);
+//    queries.emplace_back(60095, 53992);
     IO::read(input_query_folder, queries);
 //    output_queries(queries,dir);
     for(auto len_constrain: len_constrains){
