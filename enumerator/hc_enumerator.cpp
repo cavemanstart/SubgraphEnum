@@ -19,8 +19,6 @@ HcEnumerator::HcEnumerator() {
     rev_helper_offset_ = nullptr;
     csr_adj_ = nullptr;
     rev_csr_adj_ = nullptr;
-    left_relation_ = nullptr;
-    right_relation_ = nullptr;
 }
 void HcEnumerator::execute(uint32_t src, uint32_t dst) {
     assert(len_constrain_>0);
@@ -48,6 +46,13 @@ void HcEnumerator::execute(uint32_t src, uint32_t dst) {
         sorted_dfs(src,0);
 //        outputPathGraph();
         path_edges_counts_ = st.size();
+    }else if(method_type_ == query_method::Join){
+        get_pre_subgraph();
+        get_subgraph();
+        sort_adj();
+        preprocess_time_ = find_subgraph_vertices_time_ + get_pre_subgraph_time_+ reduce_graph_time_ + build_index_time_;
+        join();
+        path_edges_counts_ = st.size();
     }
     total_path_memory_cost_ = result_count_ * (len_constrain_ + 1) * sizeof (uint32_t);
     auto end = std::chrono::high_resolution_clock::now();
@@ -67,7 +72,6 @@ void HcEnumerator::init(DirectedGraph * graph){
 void HcEnumerator::init(query_method method_type, uint8_t len_constrain){
     method_type_ = method_type;
     len_constrain_ = len_constrain;
-    join_count_ = 0;
     uint64_t size = sizeof(uint32_t) * (len_constrain_ + 1);
     stack_ = (uint32_t*)malloc(size);
     memset(stack_, 0, size);
@@ -87,6 +91,7 @@ void HcEnumerator::init(query_method method_type, uint8_t len_constrain){
     index_memory_cost_  = 0;
     partial_path_memory_cost_ = 0;
     total_path_memory_cost_ = 0;
+    middle_ = 0;
 
     query_time_ = 0;
     preprocess_time_ = 0;
@@ -96,8 +101,6 @@ void HcEnumerator::init(query_method method_type, uint8_t len_constrain){
     find_subgraph_edges_time_ = 0;
     pre_estimate_time_ = 0;
     build_index_time_ = 0;
-    eliminate_edges_time_ = 0;
-    find_cutLine_time_ = 0;
     left_dfs_time_ = 0;
     right_dfs_time_ = 0;
     concat_path_time_ = 0;
@@ -141,18 +144,16 @@ void HcEnumerator::reset_for_next_single_query() {//prepare for next query pair
     s_hash_.clear();
     rev_s_hash_.clear();
 
-
-    free(left_relation_);
-    left_relation_ = nullptr;
-
-    free(right_relation_);
-    right_relation_ = nullptr;
     subgraph_vertices.clear();
     pre_subgraph.clear();
     subgraph.clear();
     sorted_subgraph.clear();
     st.clear();
     subgraph_degree.clear();
+    left_paths.clear();
+    right_paths.clear();
+    middle_vertices.clear();
+    middle_vertices_map.clear();
 
     result_count_ = 0;
     accessed_edges_ = 0;
@@ -165,6 +166,7 @@ void HcEnumerator::reset_for_next_single_query() {//prepare for next query pair
     index_memory_cost_  = 0;
     partial_path_memory_cost_ = 0;
     total_path_memory_cost_ = 0;
+    middle_ = 0;
 }
 void HcEnumerator::update_counter() {
     result_count_arr.emplace_back(result_count_);
@@ -183,8 +185,6 @@ void HcEnumerator::update_counter() {
     find_subgraph_vertices_time_arr.emplace_back(find_subgraph_vertices_time_);
     find_subgraph_edges_time_arr.emplace_back(find_subgraph_edges_time_);
     pre_estimate_time_arr.emplace_back(pre_estimate_time_);
-    find_cutLine_time_arr.emplace_back(find_cutLine_time_);
-    eliminate_edges_time_arr.emplace_back(eliminate_edges_time_);
     build_index_time_arr.emplace_back(build_index_time_);
     preprocess_time_arr.emplace_back(preprocess_time_);
     query_time_arr.emplace_back(query_time_);
@@ -213,7 +213,6 @@ void HcEnumerator::reset_counter() {
     find_subgraph_vertices_time_arr.clear();
     find_subgraph_edges_time_arr.clear();
     pre_estimate_time_arr.clear();
-    find_cutLine_time_arr.clear();
     eliminate_edges_time_arr.clear();
     build_index_time_arr.clear();
     preprocess_time_arr.clear();
@@ -424,7 +423,6 @@ void HcEnumerator::build_index() {
     index_memory_cost_ += sizeof(uint32_t) * subgraph_vertices_count_ * 2;
     tmp_flat_adj.clear();
 }
-
 void HcEnumerator::build_index_opt() {
     auto build_index_start = std::chrono::high_resolution_clock::now();
     std::vector<uint32_t> tmp_flat_adj;
@@ -515,18 +513,20 @@ void HcEnumerator::dfs_by_index(uint32_t u, uint8_t k) {
         if(g_exit) goto EXIT;
         uint32_t v = csr_adj_[i];
         if(v == dst_){
+            accessed_edges_ ++;
             stack_[k+1] = dst_;
             result_count_++;
-            for(uint8_t j=0;j<k+1;j++){
-                st.insert(std::make_pair(stack_[j],stack_[j+1]));
-            }
+//            for(uint8_t j=0;j<k+1;j++){
+//                st.insert(std::make_pair(stack_[j],stack_[j+1]));
+//            }
         }else if(k == len_constrain_-2 && !visited_[v]){
+            accessed_edges_ ++;
             stack_[k+1] = v;
             stack_[k+2] = dst_;
             result_count_++;
-            for(uint8_t j=0;j<k+2;j++){
-                st.insert(std::make_pair(stack_[j],stack_[j+1]));
-            }
+//            for(uint8_t j=0;j<k+2;j++){
+//                st.insert(std::make_pair(stack_[j],stack_[j+1]));
+//            }
         }else if(!visited_[v]) {
             accessed_edges_ ++;
             dfs_by_index(v, k + 1);
@@ -542,21 +542,126 @@ void HcEnumerator::sorted_dfs(uint32_t u, uint8_t k) {
         if(g_exit) goto EXIT;
         if( k+distance_[v].second >= len_constrain_) break;
         if(v == dst_){
+            accessed_edges_ ++;
             stack_[k+1] = dst_;
             result_count_++;
-            for(uint8_t j=0;j<k+1;j++){
-                st.insert(std::make_pair(stack_[j],stack_[j+1]));
-            }
+//            for(uint8_t j=0;j<k+1;j++){
+//                st.insert(std::make_pair(stack_[j],stack_[j+1]));
+//            }
         }else if(k == len_constrain_-2 && !visited_[v]){
+            accessed_edges_ ++;
             stack_[k+1] = v;
             stack_[k+2] = dst_;
             result_count_++;
-            for(uint8_t j=0;j<k+2;j++){
-                st.insert(std::make_pair(stack_[j],stack_[j+1]));
-            }
+//            for(uint8_t j=0;j<k+2;j++){
+//                st.insert(std::make_pair(stack_[j],stack_[j+1]));
+//            }
         }else if(!visited_[v]) {
             accessed_edges_ ++;
             sorted_dfs(v, k + 1);
+        }
+    }
+    EXIT:
+    visited_[u] = false;
+}
+void HcEnumerator::join() {
+    auto start = std::chrono::high_resolution_clock::now();
+    middle_ = len_constrain_/2;
+    left_paths.reserve(1024*len_constrain_);
+    right_paths.reserve(1024*len_constrain_);
+    left_dfs(src_,0);
+    left_path_count_ = left_paths.size();
+    auto left_dfs_end = std::chrono::high_resolution_clock::now();
+    left_dfs_time_ = std::chrono::duration_cast<std::chrono::nanoseconds>(left_dfs_end-start).count();
+    for(auto & u: middle_vertices){
+        uint64_t l = right_paths.size();
+        right_dfs(u,middle_);
+        uint64_t r = right_paths.size();
+        middle_vertices_map[u] = std::make_pair(l,r);
+    }
+    right_path_count_ = right_paths.size();
+    auto right_dfs_end = std::chrono::high_resolution_clock::now();
+    right_dfs_time_ = std::chrono::duration_cast<std::chrono::nanoseconds>(right_dfs_end-left_dfs_end).count();
+    for(auto & l_path: left_paths){
+        for(auto & v: l_path){
+            visited_[v] = true;
+        }
+        uint32_t mid_vertex = l_path.back();
+        for(uint64_t i=middle_vertices_map[mid_vertex].first;i<middle_vertices_map[mid_vertex].second;i++){
+            bool sign = false;
+            for(auto & v : right_paths[i]){
+                if(visited_[v]){
+                    sign = true;
+                    break;
+                }
+            }
+            if(!sign){
+                concat_path_count_++;
+                result_count_++;
+            }
+        }
+        for(auto & v: l_path){
+            visited_[v] = false;
+        }
+    }
+    auto end = std::chrono::high_resolution_clock::now();
+    concat_path_time_ = std::chrono::duration_cast<std::chrono::nanoseconds>(end-right_dfs_end).count();
+    join_time_ = std::chrono::duration_cast<std::chrono::nanoseconds>(end-start).count();
+    partial_path_memory_cost_ = left_path_count_*(middle_+1) + right_path_count_*(len_constrain_-middle_);
+    partial_path_memory_cost_ *= sizeof (uint32_t);
+}
+void HcEnumerator::left_dfs(uint32_t u, uint8_t k) {
+    stack_[k] = u;
+    visited_[u] = true;
+    for(auto & v : sorted_subgraph[u]){
+        if(g_exit) goto EXIT;
+        if( k+distance_[v].second >= len_constrain_) break;
+        if(visited_[v]) continue;
+        accessed_edges_ ++;
+        if(v == dst_){
+            stack_[k+1] = dst_;
+            result_count_++;
+        }else if(k == middle_-1){
+            stack_[middle_] = v;
+            middle_vertices.insert(v);
+            std::vector<uint32_t> tmp(middle_+1);
+            for(uint8_t i =0;i<=middle_;i++){
+                tmp[i] = stack_[i];
+            }
+            left_paths.emplace_back(tmp);
+        }else{
+            left_dfs(v, k + 1);
+        }
+    }
+    EXIT:
+    visited_[u] = false;
+}
+void HcEnumerator::right_dfs(uint32_t u, uint8_t k) {
+    stack_[k] = u;
+    visited_[u] = true;
+    for(auto & v : sorted_subgraph[u]){
+        if(g_exit) goto EXIT;
+        if( k+distance_[v].second >= len_constrain_) break;
+        if(v == dst_){
+            accessed_edges_ ++;
+            stack_[k+1] = dst_;
+            std::vector<uint32_t> tmp(k+1-middle_);
+            for(uint8_t i =middle_+1;i<=k+1;i++){
+                tmp[i] = stack_[i];
+            }
+            right_paths.emplace_back(tmp);
+        }else if(k == len_constrain_-2 && !visited_[v]){
+            accessed_edges_ ++;
+            stack_[k+1] = v;
+            stack_[k+2] = dst_;
+            std::vector<uint32_t> tmp(len_constrain_-middle_);
+            for(uint8_t i =middle_+1;i<=len_constrain_;i++){
+                tmp[i] = stack_[i];
+            }
+            right_paths.emplace_back(tmp);
+        }else if(!visited_[v]) {
+            accessed_edges_ ++;
+            right_dfs(v, k + 1);
         }
     }
     EXIT:

@@ -71,7 +71,6 @@ void excutor(HcEnumerator &enumerator, std::vector<std::pair<uint32_t, uint32_t>
     double average_query_time = average_time(accumulate_counter(enumerator.query_time_arr),num_queries) ;
     double average_preprocess_time = average_time(accumulate_counter(enumerator.preprocess_time_arr),num_queries) ;
     double average_enumerate_time = average_query_time - average_preprocess_time;
-    double average_find_cutLine_time = average_time(accumulate_counter(enumerator.find_cutLine_time_arr),num_queries);
     double average_join_time = average_time(accumulate_counter(enumerator.join_time_arr),num_queries);
     double average_find_subgraph_vertices_time = average_time( accumulate_counter(enumerator.find_subgraph_vertices_time_arr),num_queries);
     double average_build_index_time = average_time(accumulate_counter(enumerator.build_index_time_arr),num_queries);
@@ -106,10 +105,9 @@ void excutor(HcEnumerator &enumerator, std::vector<std::pair<uint32_t, uint32_t>
     outs<<"average preprocess time: "<< std::fixed<<std::setprecision(2) <<average_preprocess_time <<" ms\n";
     outs<<"average enumerate time: "<< std::fixed<<std::setprecision(2) <<average_enumerate_time <<" ms\n";
     outs<<"average find actives time: "<< std::fixed<<std::setprecision(2) <<average_find_subgraph_vertices_time <<" ms\n";
-    outs<<"average build csr time: "<< std::fixed<<std::setprecision(2) <<average_build_index_time <<" ms\n";
+    outs<<"average build index time: "<< std::fixed<<std::setprecision(2) <<average_build_index_time <<" ms\n";
     outs<<"average bfs time: "<< std::fixed<<std::setprecision(2) <<average_bfs_time <<" ms\n";
     outs<<"average reverse bfs time: "<< std::fixed<<std::setprecision(2) <<average_rev_bfs_time <<" ms\n";
-    outs<<"average find cut-line time: "<< std::fixed<<std::setprecision(2) << average_find_cutLine_time <<" ms\n";
     outs<<"average join time: "<< std::fixed<<std::setprecision(2) <<average_join_time <<" ms\n";
     outs<<"average left dfs time: "<< std::fixed<<std::setprecision(2) << average_left_dfs_time <<" ms\n";
     outs<<"average right dfs time: "<< std::fixed<<std::setprecision(2) << average_right_dfs_time <<" ms\n";
@@ -123,7 +121,6 @@ void excutor(HcEnumerator &enumerator, std::vector<std::pair<uint32_t, uint32_t>
     outs<<"average left path count: "<< average_left_path_count <<"\n";
     outs<<"average right path count: "<< average_right_path_count <<"\n";
     outs<<"average accessed edge count: "<< average_accessed_edges_count <<"\n";
-//    outs<<"join method ratio: "<< (double)enumerator.join_count_/num_queries <<"\n";
     outs<<"average index memory cost: "<< std::fixed<<std::setprecision(2)<< average_index_memory_cost <<" mb\n";
     outs<<"average total path memory cost: "<< std::fixed<<std::setprecision(2) << average_total_path_memory_cost <<" mb\n";
     outs<<"average partial path memory cost: "<< std::fixed<<std::setprecision(2) << average_partial_path_memory_cost <<" mb\n";
@@ -146,6 +143,7 @@ int main(int argc, char *argv[]) {
     std::vector<HcEnumerator::query_method> methods = {
             HcEnumerator::query_method::PathEnum,
             HcEnumerator::query_method::SortedEnum,
+            HcEnumerator::query_method::Join,
     };
     std::vector<uint8_t> len_constrains = {3,4,5,6,7};
     //init graph
