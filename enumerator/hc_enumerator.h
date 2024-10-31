@@ -17,7 +17,8 @@ public:
         SimpleEnum,
         PathEnum,
         SortedEnum,
-        Join,
+        Join1,
+        Join2,
     };
 
     DirectedGraph * graph_;
@@ -41,7 +42,7 @@ public:
     uint32_t * csr_adj_;
     spp::sparse_hash_map<uint32_t, uint32_t> rev_s_hash_;
     uint32_t * rev_helper_offset_;
-    uint32_t *rev_csr_adj_;
+    uint32_t * rev_csr_adj_;
 
     //subgraph struct
     std::vector<uint32_t> subgraph_vertices;
@@ -57,8 +58,10 @@ public:
     std::unordered_map<uint32_t,std::pair<uint64_t,uint64_t>> middle_vertices_map;
     std::vector<std::vector<uint32_t>> left_paths;
     std::vector<std::vector<uint32_t>> right_paths;
+    std::vector<std::vector<uint32_t>> paths;
     uint64_t left_path_count_;
     uint64_t right_path_count_;
+
     //statistic metadata
     uint64_t result_count_;
     uint64_t accessed_edges_;
@@ -129,8 +132,10 @@ public:
     void sorted_dfs(uint32_t src, uint8_t k);
     void index_dfs_for_edge(uint32_t src, uint8_t k);
     void left_dfs(uint32_t u, uint8_t k);
+    void left_dfs_by_index(uint32_t u, uint8_t k);
     void right_dfs(uint32_t u, uint8_t k);
-    void join();
+    void right_dfs_by_index(uint32_t u, uint8_t k);
+    void join(bool type);
     void reset_for_next_batch_query();
     void reset_for_next_single_query();
     void clear();
@@ -139,5 +144,6 @@ public:
     void outputPathGraph();
     void outputPreSubgraph();
     void outputSubgraph();
+    void outputPaths(bool type);
 };
 #endif //XTRAGRAPHCOMPUTING_HC_ENUMERATOR_H

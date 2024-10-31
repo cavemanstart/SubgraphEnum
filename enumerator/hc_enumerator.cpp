@@ -46,12 +46,19 @@ void HcEnumerator::execute(uint32_t src, uint32_t dst) {
         sorted_dfs(src,0);
 //        outputPathGraph();
         path_edges_counts_ = st.size();
-    }else if(method_type_ == query_method::Join){
+    }else if(method_type_ == query_method::Join1) {
+        get_pre_subgraph();
+        build_index();
+        preprocess_time_ =
+                find_subgraph_vertices_time_ + get_pre_subgraph_time_ + reduce_graph_time_ + build_index_time_;
+        join(true);
+        path_edges_counts_ = st.size();
+    }else if(method_type_ == query_method::Join2){
         get_pre_subgraph();
         get_subgraph();
         sort_adj();
         preprocess_time_ = find_subgraph_vertices_time_ + get_pre_subgraph_time_+ reduce_graph_time_ + build_index_time_;
-        join();
+        join(false);
         path_edges_counts_ = st.size();
     }
     total_path_memory_cost_ = result_count_ * (len_constrain_ + 1) * sizeof (uint32_t);
@@ -152,6 +159,7 @@ void HcEnumerator::reset_for_next_single_query() {//prepare for next query pair
     subgraph_degree.clear();
     left_paths.clear();
     right_paths.clear();
+    paths.clear();
     middle_vertices.clear();
     middle_vertices_map.clear();
 
@@ -225,8 +233,6 @@ void HcEnumerator::reset_counter() {
     get_pre_subgraph_time_arr.clear();
 }
 void HcEnumerator::clear() {
-    free(graph_);
-    graph_ = nullptr;
     free(sign_);
     sign_ = nullptr;
     free(visited_);
@@ -548,6 +554,11 @@ void HcEnumerator::sorted_dfs(uint32_t u, uint8_t k) {
 //            for(uint8_t j=0;j<k+1;j++){
 //                st.insert(std::make_pair(stack_[j],stack_[j+1]));
 //            }
+//            std::vector<uint32_t> tmp;
+//            for(uint8_t i=0;i<k+1;i++){
+//                tmp.push_back(stack_[i]);
+//            }
+//            paths.emplace_back(tmp);
         }else if(k == len_constrain_-2 && !visited_[v]){
             accessed_edges_ ++;
             stack_[k+1] = v;
@@ -556,6 +567,11 @@ void HcEnumerator::sorted_dfs(uint32_t u, uint8_t k) {
 //            for(uint8_t j=0;j<k+2;j++){
 //                st.insert(std::make_pair(stack_[j],stack_[j+1]));
 //            }
+//            std::vector<uint32_t> tmp;
+//            for(uint8_t i=0;i<=len_constrain_;i++){
+//                tmp.push_back(stack_[i]);
+//            }
+//            paths.emplace_back(tmp);
         }else if(!visited_[v]) {
             accessed_edges_ ++;
             sorted_dfs(v, k + 1);
@@ -564,18 +580,26 @@ void HcEnumerator::sorted_dfs(uint32_t u, uint8_t k) {
     EXIT:
     visited_[u] = false;
 }
-void HcEnumerator::join() {
+void HcEnumerator::join(bool type) {
     auto start = std::chrono::high_resolution_clock::now();
     middle_ = len_constrain_/2;
-    left_paths.reserve(1024*len_constrain_);
-    right_paths.reserve(1024*len_constrain_);
-    left_dfs(src_,0);
+//    left_paths.reserve(1024 * (uint32_t)pow(2,len_constrain_));
+//    right_paths.reserve(1024 * (uint32_t)pow(2,len_constrain_));
+    if(type){
+        left_dfs_by_index(src_,0);
+    }else{
+        left_dfs(src_,0);
+    }
     left_path_count_ = left_paths.size();
     auto left_dfs_end = std::chrono::high_resolution_clock::now();
     left_dfs_time_ = std::chrono::duration_cast<std::chrono::nanoseconds>(left_dfs_end-start).count();
     for(auto & u: middle_vertices){
         uint64_t l = right_paths.size();
-        right_dfs(u,middle_);
+        if(type){
+            right_dfs_by_index(u,middle_);
+        }else{
+            right_dfs(u,middle_);
+        }
         uint64_t r = right_paths.size();
         middle_vertices_map[u] = std::make_pair(l,r);
     }
@@ -598,6 +622,10 @@ void HcEnumerator::join() {
             if(!sign){
                 concat_path_count_++;
                 result_count_++;
+//                std::vector<uint32_t> tmp;
+//                tmp.insert(tmp.end(),l_path.begin(),l_path.end());
+//                tmp.insert(tmp.end(),right_paths[i].begin(),right_paths[i].end());
+//                paths.emplace_back(tmp);
             }
         }
         for(auto & v: l_path){
@@ -636,6 +664,40 @@ void HcEnumerator::left_dfs(uint32_t u, uint8_t k) {
     EXIT:
     visited_[u] = false;
 }
+void HcEnumerator::left_dfs_by_index(uint32_t u, uint8_t k) {
+    stack_[k] = u;
+    visited_[u] = true;
+    uint32_t pointer = s_hash_[u];
+    uint32_t start  = helper_offset_[pointer];
+    uint32_t end = helper_offset_[pointer + len_constrain_ - k];
+    for(uint32_t i = start; i<end; ++i) {
+        if(g_exit) goto EXIT;
+        uint32_t v = csr_adj_[i];
+        if(visited_[v]) continue;
+        accessed_edges_ ++;
+        if(v == dst_){
+            stack_[k+1] = dst_;
+            result_count_++;
+//            std::vector<uint32_t> tmp;
+//            for(uint8_t j=0;j<=k+1;j++){
+//                tmp.push_back(stack_[j]);
+//            }
+//            paths.emplace_back(tmp);
+        }else if(k == middle_-1){
+            stack_[middle_] = v;
+            middle_vertices.insert(v);
+            std::vector<uint32_t> tmp(middle_+1);
+            for(uint8_t j =0;j<=middle_;j++){
+                tmp[j] = stack_[j];
+            }
+            left_paths.emplace_back(tmp);
+        }else{
+            left_dfs_by_index(v, k + 1);
+        }
+    }
+    EXIT:
+    visited_[u] = false;
+}
 void HcEnumerator::right_dfs(uint32_t u, uint8_t k) {
     stack_[k] = u;
     visited_[u] = true;
@@ -646,8 +708,8 @@ void HcEnumerator::right_dfs(uint32_t u, uint8_t k) {
             accessed_edges_ ++;
             stack_[k+1] = dst_;
             std::vector<uint32_t> tmp(k+1-middle_);
-            for(uint8_t i =middle_+1;i<=k+1;i++){
-                tmp[i] = stack_[i];
+            for(uint8_t i =middle_+1, j=0;i<=k+1;i++,j++){
+                tmp[j] = stack_[i];
             }
             right_paths.emplace_back(tmp);
         }else if(k == len_constrain_-2 && !visited_[v]){
@@ -655,8 +717,8 @@ void HcEnumerator::right_dfs(uint32_t u, uint8_t k) {
             stack_[k+1] = v;
             stack_[k+2] = dst_;
             std::vector<uint32_t> tmp(len_constrain_-middle_);
-            for(uint8_t i =middle_+1;i<=len_constrain_;i++){
-                tmp[i] = stack_[i];
+            for(uint8_t i =middle_+1, j=0;i<=len_constrain_;i++, j++){
+                tmp[j] = stack_[i];
             }
             right_paths.emplace_back(tmp);
         }else if(!visited_[v]) {
@@ -666,4 +728,55 @@ void HcEnumerator::right_dfs(uint32_t u, uint8_t k) {
     }
     EXIT:
     visited_[u] = false;
+}
+void HcEnumerator::right_dfs_by_index(uint32_t u, uint8_t k) {
+    stack_[k] = u;
+    visited_[u] = true;
+    uint32_t pointer = s_hash_[u];
+    uint32_t start  = helper_offset_[pointer];
+    uint32_t end = helper_offset_[pointer + len_constrain_ - k];
+    for(uint32_t i = start; i<end; ++i) {
+        if(g_exit) goto EXIT;
+        uint32_t v = csr_adj_[i];
+        if(v == dst_){
+            accessed_edges_ ++;
+            stack_[k+1] = dst_;
+            std::vector<uint32_t> tmp(k+1-middle_);
+            for(uint8_t idx =0, j =middle_+1;j<=k+1; idx++,j++){
+                tmp[idx] = stack_[j];
+            }
+            right_paths.emplace_back(tmp);
+        }else if(k == len_constrain_-2 && !visited_[v]){
+            accessed_edges_ ++;
+            stack_[k+1] = v;
+            stack_[k+2] = dst_;
+            std::vector<uint32_t> tmp(len_constrain_-middle_);
+            for(uint8_t idx=0, j =middle_+1;j<=len_constrain_;idx++,j++){
+                tmp[idx] = stack_[j];
+            }
+            right_paths.emplace_back(tmp);
+        }else if(!visited_[v]) {
+            accessed_edges_ ++;
+            right_dfs_by_index(v, k + 1);
+        }
+    }
+    EXIT:
+    visited_[u] = false;
+}
+void HcEnumerator::outputPaths(bool type){
+    std::string outfile = "./";
+    if(type){
+        outfile += "original_path.txt";
+    }else{
+        outfile += "join_path.txt";
+    }
+    std::ofstream outs(outfile,std::ios::app);
+    std::sort(paths.begin(),paths.end());
+    for(auto & path : paths){
+        for(auto & v: path){
+            outs<<v<<" ";
+        }
+        outs<<"\n";
+    }
+    outs.close();
 }

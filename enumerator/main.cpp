@@ -143,7 +143,8 @@ int main(int argc, char *argv[]) {
     std::vector<HcEnumerator::query_method> methods = {
             HcEnumerator::query_method::PathEnum,
             HcEnumerator::query_method::SortedEnum,
-            HcEnumerator::query_method::Join,
+            HcEnumerator::query_method::Join1,
+            HcEnumerator::query_method::Join2,
     };
     std::vector<uint8_t> len_constrains = {3,4,5,6,7};
     //init graph
@@ -153,7 +154,7 @@ int main(int argc, char *argv[]) {
     enumerator.init(&digraph);
     input_query_folder += "/general_pairs.bin";
     std::vector<std::pair<uint32_t, uint32_t>> queries;
-//    queries.emplace_back(60095, 53992);
+//    queries.emplace_back(693, 19122);
     IO::read(input_query_folder, queries);
 //    output_queries(queries,dir);
     for(auto len_constrain: len_constrains){
@@ -170,5 +171,6 @@ int main(int argc, char *argv[]) {
             excutor(enumerator,queries,dir);
         }
     }
+    enumerator.clear();
     return 0;
 }
